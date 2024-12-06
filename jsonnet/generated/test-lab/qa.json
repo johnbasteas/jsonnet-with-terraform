@@ -1,0 +1,81 @@
+{
+   "account_name": "test-lab",
+   "aws": {
+      "tags": {
+         "Environment": "QA",
+         "Managed_by": "TERRAFORM",
+         "Owner": "TEST-LAB-QA"
+      }
+   },
+   "aws_resources": {
+      "eu-central-1": {
+         "vpc": {
+            "test-lab-vpc": {
+               "azs": [
+                  "eu-central-1a",
+                  "eu-central-1b",
+                  "eu-central-1c"
+               ],
+               "cidr": "10.1.0.0/20",
+               "database_subnets": [
+                  "10.1.4.0/24",
+                  "10.1.5.0/24",
+                  "10.1.6.0/24"
+               ],
+               "elasticache_subnets": [
+                  "10.1.7.0/24",
+                  "10.1.8.0/24",
+                  "10.1.9.0/24"
+               ],
+               "enable_dns_hostnames": true,
+               "enable_dns_support": true,
+               "private_subnets": [
+                  "10.1.1.0/24",
+                  "10.1.2.0/24",
+                  "10.1.3.0/24"
+               ],
+               "public_subnets": [
+                  "10.1.10.0/24",
+                  "10.1.11.0/24",
+                  "10.1.12.0/24"
+               ]
+            }
+         }
+      },
+      "eu-west-1": {
+         "vpc": {
+            "test-lab-vpc": {
+               "azs": [
+                  "eu-west-1a",
+                  "eu-west-1b",
+                  "eu-west-1c"
+               ],
+               "cidr": "10.2.0.0/20",
+               "database_subnets": [
+                  "10.2.4.0/24",
+                  "10.2.5.0/24",
+                  "10.2.6.0/24"
+               ],
+               "elasticache_subnets": [
+                  "10.2.7.0/24",
+                  "10.2.8.0/24",
+                  "10.2.9.0/24"
+               ],
+               "enable_dns_hostnames": true,
+               "enable_dns_support": true,
+               "private_subnets": [
+                  "10.2.1.0/24",
+                  "10.2.2.0/24",
+                  "10.2.3.0/24"
+               ],
+               "public_subnets": [
+                  "10.2.10.0/24",
+                  "10.2.11.0/24",
+                  "10.2.12.0/24"
+               ]
+            }
+         }
+      }
+   },
+   "env": "qa"
+}

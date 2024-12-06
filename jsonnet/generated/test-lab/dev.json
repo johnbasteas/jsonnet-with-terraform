@@ -1,0 +1,336 @@
+{
+   "account_name": "test-lab",
+   "aws": {
+      "tags": {
+         "Environment": "DEV",
+         "Managed_by": "TERRAFORM",
+         "Owner": "TEST-LAB-DEV"
+      }
+   },
+   "aws_resources": {
+      "eu-central-1": {
+         "alb": {
+            "test-lab-alb": {
+               "internal": false,
+               "ip_address_type": "ipv4",
+               "sg_name": "test-lab-alb-sg",
+               "target": {
+                  "test-lab-nginxservice-tg": {
+                     "health_check": [
+                        {
+                           "interval": 60,
+                           "matcher": "200",
+                           "path": "/",
+                           "unhealthy_threshold": 2
+                        }
+                     ],
+                     "port": 80,
+                     "protocol": "HTTP",
+                     "rules": { }
+                  }
+               },
+               "vpc": "test-lab-vpc"
+            }
+         },
+         "cloudwatch": {
+            "log_groups": {
+               "test-lab-nginxservice-task": {
+                  "name": "test-lab-nginxservice-task",
+                  "retention_in_days": 5
+               }
+            }
+         },
+         "ecs_cluster": {
+            "test-lab-cluster": {
+               "capacity_providers": [
+                  "FARGATE_SPOT",
+                  "FARGATE"
+               ],
+               "default_capacity_provider": {
+                  "base": 50,
+                  "capacity_provider": "FARGATE_SPOT",
+                  "weight": 100
+               },
+               "insights": "enabled"
+            }
+         },
+         "ecs_service": {
+            "test-lab-nginxservice-service": {
+               "alb": "test-lab-alb",
+               "alb_target": "test-lab-nginxservice-tg",
+               "assign_public_ip": true,
+               "capacity_provider_strategy": [
+                  {
+                     "base": 50,
+                     "capacity_provider": "FARGATE_SPOT",
+                     "weight": 100
+                  }
+               ],
+               "desired_count": 1,
+               "ecs_cluster": "test-lab-cluster",
+               "ecs_security_group_name": "test-lab-nginxservice-ecs-service-sg",
+               "ecs_sg_allow_container_port": 80,
+               "enable_deployment_circuit_breaker": true,
+               "enable_deployment_circuit_breaker_rollback": true,
+               "enable_execute_command": true,
+               "enable_icmp_ingress": false,
+               "task": {
+                  "container_name": "test-lab-nginxservice",
+                  "container_port": 80,
+                  "cpu": 1024,
+                  "exec_role": "common-task-exec",
+                  "log_group_name": "test-lab-nginxservice-task",
+                  "memory": 2048,
+                  "name": "test-lab-nginxservice-task",
+                  "role": "test-lab-nginxservice-task"
+               },
+               "use_alb_security_group": true,
+               "vpc": "test-lab-vpc"
+            }
+         },
+         "vpc": {
+            "test-lab-vpc": {
+               "azs": [
+                  "eu-central-1a",
+                  "eu-central-1b",
+                  "eu-central-1c"
+               ],
+               "cidr": "10.1.0.0/20",
+               "database_subnets": [
+                  "10.1.4.0/24",
+                  "10.1.5.0/24",
+                  "10.1.6.0/24"
+               ],
+               "elasticache_subnets": [
+                  "10.1.7.0/24",
+                  "10.1.8.0/24",
+                  "10.1.9.0/24"
+               ],
+               "enable_dns_hostnames": true,
+               "enable_dns_support": true,
+               "private_subnets": [
+                  "10.1.1.0/24",
+                  "10.1.2.0/24",
+                  "10.1.3.0/24"
+               ],
+               "public_subnets": [
+                  "10.1.10.0/24",
+                  "10.1.11.0/24",
+                  "10.1.12.0/24"
+               ]
+            }
+         }
+      },
+      "eu-west-1": {
+         "alb": {
+            "test-lab-alb": {
+               "internal": false,
+               "ip_address_type": "ipv4",
+               "sg_name": "test-lab-alb-sg",
+               "target": {
+                  "test-lab-nginxservice-tg": {
+                     "health_check": [
+                        {
+                           "interval": 60,
+                           "matcher": "200",
+                           "path": "/",
+                           "unhealthy_threshold": 2
+                        }
+                     ],
+                     "port": 80,
+                     "protocol": "HTTP",
+                     "rules": { }
+                  }
+               },
+               "vpc": "test-lab-vpc"
+            }
+         },
+         "cloudwatch": {
+            "log_groups": {
+               "test-lab-nginxservice-task": {
+                  "name": "test-lab-nginxservice-task",
+                  "retention_in_days": 5
+               }
+            }
+         },
+         "ecs_cluster": {
+            "test-lab-cluster": {
+               "capacity_providers": [
+                  "FARGATE_SPOT",
+                  "FARGATE"
+               ],
+               "default_capacity_provider": {
+                  "base": 50,
+                  "capacity_provider": "FARGATE_SPOT",
+                  "weight": 100
+               },
+               "insights": "enabled"
+            }
+         },
+         "ecs_service": {
+            "test-lab-nginxservice-service": {
+               "alb": "test-lab-alb",
+               "alb_target": "test-lab-nginxservice-tg",
+               "assign_public_ip": true,
+               "capacity_provider_strategy": [
+                  {
+                     "base": 50,
+                     "capacity_provider": "FARGATE_SPOT",
+                     "weight": 100
+                  }
+               ],
+               "desired_count": 1,
+               "ecs_cluster": "test-lab-cluster",
+               "ecs_security_group_name": "test-lab-nginxservice-ecs-service-sg",
+               "ecs_sg_allow_container_port": 80,
+               "enable_deployment_circuit_breaker": true,
+               "enable_deployment_circuit_breaker_rollback": true,
+               "enable_execute_command": true,
+               "enable_icmp_ingress": false,
+               "task": {
+                  "container_name": "test-lab-nginxservice",
+                  "container_port": 80,
+                  "cpu": 1024,
+                  "exec_role": "common-task-exec",
+                  "log_group_name": "test-lab-nginxservice-task",
+                  "memory": 2048,
+                  "name": "test-lab-nginxservice-task",
+                  "role": "test-lab-nginxservice-task"
+               },
+               "use_alb_security_group": true,
+               "vpc": "test-lab-vpc"
+            }
+         },
+         "vpc": {
+            "test-lab-vpc": {
+               "azs": [
+                  "eu-west-1a",
+                  "eu-west-1b",
+                  "eu-west-1c"
+               ],
+               "cidr": "10.2.0.0/20",
+               "database_subnets": [
+                  "10.2.4.0/24",
+                  "10.2.5.0/24",
+                  "10.2.6.0/24"
+               ],
+               "elasticache_subnets": [
+                  "10.2.7.0/24",
+                  "10.2.8.0/24",
+                  "10.2.9.0/24"
+               ],
+               "enable_dns_hostnames": true,
+               "enable_dns_support": true,
+               "private_subnets": [
+                  "10.2.1.0/24",
+                  "10.2.2.0/24",
+                  "10.2.3.0/24"
+               ],
+               "public_subnets": [
+                  "10.2.10.0/24",
+                  "10.2.11.0/24",
+                  "10.2.12.0/24"
+               ]
+            }
+         }
+      },
+      "global": {
+         "iam": {
+            "policies": {
+               "ecs_task_exec_policy": {
+                  "name": "ecs-task-exec-policy",
+                  "policy": {
+                     "Statement": [
+                        {
+                           "Action": [
+                              "logs:PutLogEvents",
+                              "logs:CreateLogStream",
+                              "ecr:GetDownloadUrlForLayer",
+                              "ecr:GetAuthorizationToken",
+                              "ecr:BatchGetImage",
+                              "ecr:BatchCheckLayerAvailability"
+                           ],
+                           "Effect": "Allow",
+                           "Resource": [
+                              "*"
+                           ]
+                        }
+                     ],
+                     "Version": "2012-10-17"
+                  }
+               },
+               "ecs_task_policy": {
+                  "name": "ecs-task-policy",
+                  "policy": {
+                     "Statement": [
+                        {
+                           "Action": [
+                              "kms:Encrypt",
+                              "kms:Decrypt",
+                              "kms:GenerateDataKey"
+                           ],
+                           "Effect": "Allow",
+                           "Resource": [
+                              "*"
+                           ]
+                        }
+                     ],
+                     "Version": "2012-10-17"
+                  }
+               }
+            },
+            "roles": {
+               "common-task-exec": {
+                  "assume_role_policy": {
+                     "Statement": [
+                        {
+                           "Action": "sts:AssumeRole",
+                           "Effect": "Allow",
+                           "Principal": {
+                              "Service": "ecs-tasks.amazonaws.com"
+                           }
+                        }
+                     ],
+                     "Version": "2012-10-17"
+                  },
+                  "aws_managed": [ ],
+                  "iam_policies": [
+                     "ecs-task-exec-policy"
+                  ],
+                  "role_description": "common-task-exec role",
+                  "role_force_detach_policies": true,
+                  "role_name": "common-task-exec",
+                  "role_path": null,
+                  "role_permissions_boundary": null
+               },
+               "test-lab-nginxservice-task": {
+                  "assume_role_policy": {
+                     "Statement": [
+                        {
+                           "Action": "sts:AssumeRole",
+                           "Effect": "Allow",
+                           "Principal": {
+                              "Service": "ecs-tasks.amazonaws.com"
+                           }
+                        }
+                     ],
+                     "Version": "2012-10-17"
+                  },
+                  "aws_managed": [
+                     "arn:aws:iam::aws:policy/AWSHealthFullAccess"
+                  ],
+                  "iam_policies": [
+                     "ecs-task-policy"
+                  ],
+                  "role_description": "test-lab-nginxservice-task role",
+                  "role_force_detach_policies": true,
+                  "role_name": "test-lab-nginxservice-task",
+                  "role_path": null,
+                  "role_permissions_boundary": null
+               }
+            }
+         }
+      }
+   },
+   "env": "dev"
+}
